@@ -22,11 +22,7 @@ class ViewController: UIViewController {
         
         
         view.backgroundColor = .brown
-        stackViewOfButtons.axis = .horizontal
-        setupCircles()
-    }
-    
-    func setupCircles() {
+        
         let circles = [firstCircle, secondCircle, thirdCircle, fourthCircle]
         for circle in circles {
             circle.translatesAutoresizingMaskIntoConstraints = false
@@ -39,22 +35,30 @@ class ViewController: UIViewController {
             view.addSubview(circle)
         }
         
+        
+        stackViewOfButtons.axis = .horizontal
+        stackViewOfButtons.alignment = .center
+        stackViewOfButtons.distribution = .equalSpacing
+        
+        stackViewOfButtons.addArrangedSubview(firstCircle)
+        stackViewOfButtons.addArrangedSubview(secondCircle)
+        stackViewOfButtons.addArrangedSubview(thirdCircle)
+        stackViewOfButtons.addArrangedSubview(fourthCircle)
+        
+        view.addSubview(stackViewOfButtons)
+        setupStack()
+        
+    }
+    
+    func setupStack() {
+
+        
+        stackViewOfButtons.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            firstCircle.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
-            firstCircle.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            
-            secondCircle.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
-            secondCircle.leadingAnchor.constraint(equalTo: firstCircle.trailingAnchor, constant: 10),
-       
-            thirdCircle.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
-            thirdCircle.leadingAnchor.constraint(equalTo: secondCircle.trailingAnchor, constant: 10),
-            
-            fourthCircle.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
-            fourthCircle.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30)
-            
+            stackViewOfButtons.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackViewOfButtons.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30)
         ])
     }
-
 
 }
 
