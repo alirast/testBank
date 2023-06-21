@@ -22,7 +22,13 @@ class ViewController: UIViewController {
         
         
         view.backgroundColor = .brown
+    
+        view.addSubview(stackViewOfButtons)
+        setupStack()
         
+    }
+    
+    func setupStack() {
         let circles = [firstCircle, secondCircle, thirdCircle, fourthCircle]
         for circle in circles {
             circle.translatesAutoresizingMaskIntoConstraints = false
@@ -35,7 +41,6 @@ class ViewController: UIViewController {
             view.addSubview(circle)
         }
         
-        
         stackViewOfButtons.axis = .horizontal
         stackViewOfButtons.alignment = .center
         stackViewOfButtons.distribution = .equalSpacing
@@ -45,20 +50,14 @@ class ViewController: UIViewController {
         stackViewOfButtons.addArrangedSubview(thirdCircle)
         stackViewOfButtons.addArrangedSubview(fourthCircle)
         
-        view.addSubview(stackViewOfButtons)
-        setupStack()
-        
-    }
-    
-    func setupStack() {
-
-        
         stackViewOfButtons.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             stackViewOfButtons.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stackViewOfButtons.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30)
         ])
     }
+    
+    
 
 }
 
