@@ -15,11 +15,18 @@ class ViewController: UIViewController {
     var thirdCircle = UIButton(type: .system)
     var fourthCircle = UIButton(type: .system)
     
+    var circles = [UIButton]()
+    
     var stackViewOfButtons = UIStackView()
     
     var keyButtons = [UIButton]()
     
     var stackViewOfNumbers = UIStackView()
+    
+    var password = [String]()
+    let correctPassword = "1234"
+    
+    var selectedCircles = [Int]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -148,7 +155,7 @@ class ViewController: UIViewController {
         clearKey.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 40)
         clearKey.tintColor = .black
         clearKey.layer.borderWidth = 1
-        //add target
+        clearKey.addTarget(self, action: #selector(clear), for: .touchUpInside)
         view.addSubview(clearKey)
         lastRowKeys.append(clearKey)
         
@@ -171,11 +178,58 @@ class ViewController: UIViewController {
     }
     
     @objc func numberKeyTapped(sender: UIButton) {
+        guard let currentNumber = sender.currentTitle else { return }
+        password.append(currentNumber)
+        selectedCircles.append(1)
+        //warning.isHidden = true
         
+        switch selectedCircles.count {
+        case 1:
+            firstCircle.backgroundColor = .blue
+        case 2:
+            secondCircle.backgroundColor = .blue
+        case 3:
+            thirdCircle.backgroundColor = .blue
+        default:
+            fourthCircle.backgroundColor = .blue
+        }
+        
+        if password.count >= 4 {
+            keyButtons.map({ $0.isUserInteractionEnabled = false; $0.tintColor = .gray })
+        }
+        
+        if password.joined() == correctPassword {
+            selectedCircles.removeAll()
+            circles.map({ $0.layer.borderColor = UIColor.green.cgColor; $0.backgroundColor = .green })
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                if let secondVC = self.storyboard?.instantiateViewController(withIdentifier: "SecondVC") as? SecondVC {
+                    self.navigationController?.pushViewController(secondVC, animated: true)
+                }
+            }
+            
+        } else if password.joined() != correctPassword {
+            selectedCircles.removeAll()
+            circles.map({ $0.layer.borderColor = UIColor.red.cgColor; $0.backgroundColor = .red })
+            let alert = UIAlertController(title: "Error", message: nil, preferredStyle: .alert)
+            present(alert, animated: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                alert.dismiss(animated: true)
+                self.keyButtons.map({ $0.isUserInteractionEnabled = true; $0.tintColor = .black })
+                self.circles.map({ $0.layer.borderColor = UIColor.black.cgColor; $0.backgroundColor = .white })
+                self.password.removeAll()
+                //self.warning.isHidden = false
+                
+            }
+        }
+    }
+    
+    @objc func clear() {
+        password.removeLast()
+        print("NEW PASSWORD", password)
     }
     
     func setupStackButtons() {
-        let circles = [firstCircle, secondCircle, thirdCircle, fourthCircle]
+        circles = [firstCircle, secondCircle, thirdCircle, fourthCircle]
         for circle in circles {
             circle.translatesAutoresizingMaskIntoConstraints = false
             circle.backgroundColor = .white
