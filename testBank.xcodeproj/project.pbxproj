@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F1830062A43646A003B772C /* SecondVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1830052A43646A003B772C /* SecondVC.swift */; };
 		4F26BB6F2A42137F0086348F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F26BB6E2A42137F0086348F /* AppDelegate.swift */; };
 		4F26BB712A42137F0086348F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F26BB702A42137F0086348F /* SceneDelegate.swift */; };
 		4F26BB732A42137F0086348F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F26BB722A42137F0086348F /* ViewController.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4F1830052A43646A003B772C /* SecondVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondVC.swift; sourceTree = "<group>"; };
 		4F26BB6B2A42137F0086348F /* testBank.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = testBank.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F26BB6E2A42137F0086348F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4F26BB702A42137F0086348F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 				4F26BB6E2A42137F0086348F /* AppDelegate.swift */,
 				4F26BB702A42137F0086348F /* SceneDelegate.swift */,
 				4F26BB722A42137F0086348F /* ViewController.swift */,
+				4F1830052A43646A003B772C /* SecondVC.swift */,
 				4F26BB742A42137F0086348F /* Main.storyboard */,
 				4F26BB772A4213800086348F /* Assets.xcassets */,
 				4F26BB792A4213800086348F /* LaunchScreen.storyboard */,
@@ -144,6 +147,7 @@
 			files = (
 				4F26BB732A42137F0086348F /* ViewController.swift in Sources */,
 				4F26BB6F2A42137F0086348F /* AppDelegate.swift in Sources */,
+				4F1830062A43646A003B772C /* SecondVC.swift in Sources */,
 				4F26BB712A42137F0086348F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
