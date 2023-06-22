@@ -56,6 +56,7 @@ class ViewController: UIViewController {
             button.addTarget(self, action: #selector(numberKeyTapped(sender:)), for: .touchUpInside)
             view.addSubview(button)
             firstRowKeys.append(button)
+            keyButtons.append(button)
         }
         
         firstRowStackView.axis = .horizontal
@@ -87,6 +88,7 @@ class ViewController: UIViewController {
             button.addTarget(self, action: #selector(numberKeyTapped(sender:)), for: .touchUpInside)
             view.addSubview(button)
             secondRowKeys.append(button)
+            keyButtons.append(button)
         }
         
         secondRowStackView.axis = .horizontal
@@ -119,6 +121,7 @@ class ViewController: UIViewController {
             button.addTarget(self, action: #selector(numberKeyTapped(sender:)), for: .touchUpInside)
             view.addSubview(button)
             thirdRowKeys.append(button)
+            keyButtons.append(button)
         }
         
         thirdRowStackView.axis = .horizontal
@@ -149,6 +152,7 @@ class ViewController: UIViewController {
         zeroKey.addTarget(self, action: #selector(numberKeyTapped(sender:)), for: .touchUpInside)
         view.addSubview(zeroKey)
         lastRowKeys.append(zeroKey)
+        keyButtons.append(zeroKey)
         
         let clearKey = UIButton(type: .system)
         clearKey.setTitle("Clear", for: .normal)
@@ -178,11 +182,13 @@ class ViewController: UIViewController {
     }
     
     @objc func numberKeyTapped(sender: UIButton) {
+        print("number tapped")
         guard let currentNumber = sender.currentTitle else { return }
+        print("current number", currentNumber)
         password.append(currentNumber)
+        print("password", password)
         selectedCircles.append(1)
-        //warning.isHidden = true
-        
+        print("selected circles", selectedCircles)
         switch selectedCircles.count {
         case 1:
             firstCircle.backgroundColor = .blue
@@ -194,37 +200,45 @@ class ViewController: UIViewController {
             fourthCircle.backgroundColor = .blue
         }
         
-        if password.count >= 4 {
-            keyButtons.map({ $0.isUserInteractionEnabled = false; $0.tintColor = .gray })
-        }
+        guard password.count >= 4 else { return }
+        print(password.count)
+        keyButtons.map({ $0.isUserInteractionEnabled = false; $0.tintColor = .gray; $0.layer.borderColor = UIColor.gray.cgColor })
         
         if password.joined() == correctPassword {
+            print("correct password")
+            print("selected circles count", selectedCircles.count)
             selectedCircles.removeAll()
+            print("circles count", circles.count)
             circles.map({ $0.layer.borderColor = UIColor.green.cgColor; $0.backgroundColor = .green })
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 if let secondVC = self.storyboard?.instantiateViewController(withIdentifier: "SecondVC") as? SecondVC {
                     self.navigationController?.pushViewController(secondVC, animated: true)
                 }
             }
-            
         } else if password.joined() != correctPassword {
+            print("not correct password")
+            print("selected circles count", selectedCircles.count)
             selectedCircles.removeAll()
             circles.map({ $0.layer.borderColor = UIColor.red.cgColor; $0.backgroundColor = .red })
             let alert = UIAlertController(title: "Error", message: nil, preferredStyle: .alert)
             present(alert, animated: true)
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 alert.dismiss(animated: true)
-                self.keyButtons.map({ $0.isUserInteractionEnabled = true; $0.tintColor = .black })
+                self.keyButtons.map({ $0.isUserInteractionEnabled = true; $0.tintColor = .black; $0.layer.borderColor = UIColor.black.cgColor })
                 self.circles.map({ $0.layer.borderColor = UIColor.black.cgColor; $0.backgroundColor = .white })
                 self.password.removeAll()
-                //self.warning.isHidden = false
-                
             }
         }
     }
     
     @objc func clear() {
         password.removeLast()
+        var array = [Int]()
+        for i in 0...selectedCircles.count - 1 {
+            array.append(i)
+        }
+        circles[array.last!].backgroundColor = .white
+        selectedCircles.remove(at: array.last!)
         print("NEW PASSWORD", password)
     }
     
@@ -255,8 +269,5 @@ class ViewController: UIViewController {
             stackViewOfButtons.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30)
         ])
     }
-    
-    
-
 }
 
